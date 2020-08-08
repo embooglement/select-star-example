@@ -10,7 +10,7 @@ const DirectoryTitle = styled.h1`
   margin: 4px;
 `;
 
-const DirectoryList = styled.ol`
+const DirectoryList = styled.ul`
 
 `;
 

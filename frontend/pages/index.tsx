@@ -2,6 +2,9 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Directory from '../components/Directory';
 
+const DirectoryListWrapper = styled.ul`
+  list-style-type: none;
+`;
 
 type HomeProps = {
   [nameGroup: string]: string[];
@@ -41,7 +44,7 @@ export default function Home({ nameGroupings }: HomeProps) {
   };
 
   return (
-    <ol>
+    <DirectoryListWrapper>
       {Object.keys(directories).map((directory) => {
         const items = directories[directory] || [];
         // TODO: come up with a better key prop
@@ -51,6 +54,6 @@ export default function Home({ nameGroupings }: HomeProps) {
           </li>
         );
       })}
-    </ol>
+    </DirectoryListWrapper>
   );
 }
