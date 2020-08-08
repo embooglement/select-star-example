@@ -40,6 +40,8 @@ export default function Home({ nameGroupings }: HomeProps) {
       newDirectories[newDirectory] = [item];
     }
 
+    // TODO: handle case where directory becomes empty
+
     setDirectories(newDirectories);
   };
 
