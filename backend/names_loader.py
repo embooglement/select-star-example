@@ -9,9 +9,22 @@ def _load_names(names_csv_path):
     return names
 
 
+def _get_name_prefix(name):
+    return name.split("_")[0]
+
+
 def _group_names(names):
-    # TODO: actually do the grouping
-    return { "all": names }
+    grouped_names = {}
+
+    for name in names:
+        prefix = _get_name_prefix(name)
+        if prefix not in grouped_names:
+            grouped_names[prefix] = []
+
+        grouped_names[prefix].append(name)
+
+
+    return grouped_names
 
 
 def get_names(names_csv_path):
