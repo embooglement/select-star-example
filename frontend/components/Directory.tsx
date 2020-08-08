@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import DirectoryListItem from './DirectoryListItem';
+
 const DirectoryWrapper = styled.div`
   border: 1px solid black;
   padding: 8px;
@@ -14,18 +16,6 @@ const DirectoryList = styled.ul`
 
 `;
 
-const DirectoryListItem = styled.li`
-
-`;
-
-const DirectoryListItemName = styled.span`
-  margin-right: 8px;
-`;
-
-const DirectoryListItemControls = styled.span`
-
-`;
-
 type Props = {
   directory: string,
   items: string[],
@@ -33,36 +23,32 @@ type Props = {
 };
 
 export default function Directory(props: Props) {
+  const { directory, addItemToNewDirectory } = props;
+
   const [items, setItems] = useState(props.items);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleIsExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <DirectoryWrapper>
       <DirectoryTitle>{props.directory} ({items.length})</DirectoryTitle>
-      <DirectoryList>
+      <button onClick={toggleIsExpanded}>{isExpanded ? 'Collapse' : 'Expand'}</button>
+      {isExpanded && <DirectoryList>
         {items.map((item) => {
-          const [newDirectoryName, setNewDirectoryName] = useState(null);
-          const moveDirectory = () => {
-            props.addItemToNewDirectory(item, props.directory, newDirectoryName.trim());
-          };
-
           return (
-            <DirectoryListItem key={item}>
-              <DirectoryListItemName>{item}</DirectoryListItemName>
-              <DirectoryListItemControls>
-                <input type="text"
-                  placeholder="New directory"
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      setNewDirectoryName(e.target.value);
-                    }
-                  }}
-                />
-                <button onClick={moveDirectory}>Submit</button>
-              </DirectoryListItemControls>
-            </DirectoryListItem>
+            <DirectoryListItem
+              key={item}
+              directory={directory}
+              item={item}
+              addItemToNewDirectory={addItemToNewDirectory}
+            />
           );
         })}
       </DirectoryList>
+    }
     </DirectoryWrapper>
   );
 }
